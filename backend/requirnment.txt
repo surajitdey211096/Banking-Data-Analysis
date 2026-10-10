@@ -1,0 +1,27 @@
+
+# FastAPI backend
+fastapi
+uvicorn[standard]
+python-multipart
+
+# Data processing
+pandas
+numpy
+openpyxl
+
+# Data validation
+pydantic[email]
+
+# RAG and embeddings
+sentence-transformers
+faiss-cpu
+
+# Google Gemini API
+google-genai
+
+# Environment variables
+python-dotenv
+
+# Database connectivity (MySQL)
+sqlalchemy
+pymysql

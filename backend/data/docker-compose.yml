@@ -1,0 +1,34 @@
+
+services:
+  # FastAPI backend
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: banking-backend
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./backend/.env
+    environment:
+      # Inside Docker, use service names rather than localhost
+      PYTHONUNBUFFERED: "1"
+    volumes:
+      # Persist the banking dataset and RAG files
+      - ./backend/data:/app/data
+      - ./backend/app/rag/documents:/app/app/rag/documents
+      - ./backend/app/rag/faiss_index:/app/app/rag/faiss_index
+      - ./backend/app/rag/metadata:/app/app/rag/metadata
+    restart: unless-stopped
+
+  # React frontend served by Nginx
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: banking-frontend
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
